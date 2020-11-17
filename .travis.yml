@@ -1,0 +1,22 @@
+sudo: required
+services:
+    - docker
+before_install:
+    - docker build -t example-name -f Dockerfile.dev .
+script:
+    - docker run example-name npm run test
+
+language: node_js
+language: generic
+
+deploy:
+    provider: elasticbeanstalk
+    region: "example"
+    app: "example"
+    env: "example"
+    bucket_name: "example"
+    bucket_path: "example"
+    on:
+        branch: master
+    access_key_id: $AWS_ACCESS_KEY
+    secret_access_key: $AWS_SECRET_KEY

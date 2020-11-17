@@ -1,0 +1,14 @@
+version: '3'
+
+services:
+  nodejsserver:
+    build: .
+    container_name: nodejsserver
+    command: npm run dev
+    restart: always
+    env_file: .env
+    ports:
+        - 3000:80
+    volumes:
+      - ./:/usr/src/app
+      - ./node_modules:/usr/src/app/node_modules

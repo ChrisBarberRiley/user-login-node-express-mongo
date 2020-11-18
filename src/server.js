@@ -5,9 +5,13 @@ import morgan from 'morgan'
 import logger from './middleware/logger.js'
 import routes from './routes/index.js'
 import dotenv from 'dotenv'
+import connectDb from './config/db.js'
+
 const app = express()
 
 dotenv.config()
+
+connectDb()
 
 if (process.env.NODE_ENV == 'development') {
     app.use(morgan('dev'))
@@ -16,14 +20,10 @@ if (process.env.NODE_ENV == 'development') {
 app.use(express.json())
 app.use(cors())
 
-app.get('/', (req, res) => {
-    res.status(200).send('Hello world')
-})
+app.use('/api/v1', routes)
 
 const PORT = process.env.PORT || 3000
 
 app.listen(PORT, () => {
     console.log(`Listening on port ${PORT}`)
 })
-
-app.use('/api/v1', routes)
